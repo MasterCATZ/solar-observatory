@@ -18,7 +18,8 @@ Monitoring system for Enphase envoy-based photovoltaic systems
 
 
 
-I have 3 rows of panels, so I have some location labeling for these 3 arrays. If you wish to label your panels
+I have 3 arrays of panels, so I have some location labeling for these 3 arrays to measure AMPS of each string.
+If you wish to label your panels
 just replace the `serials` map in scrape.py and rebuild the container.
 
 ![dashboard](https://github.com/petercable/solar-observatory/blob/master/screenshot.png)
