@@ -125,7 +125,7 @@ def scrape_inverters():
     print(data)
     for inverter in data:
         serial = int(inverter['serialNumber'])
-        location = serials.get(serial, 'unknown')
+        location = serials.get(serial, '')
         inverter_gauges['last'].labels(serial=serial, location=location).set(inverter['lastReportWatts'])
         inverter_gauges['max'].labels(serial=serial, location=location).set(inverter['maxReportWatts'])
 
