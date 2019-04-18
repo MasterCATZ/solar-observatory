@@ -14,7 +14,7 @@ Monitoring system for Enphase envoy-based photovoltaic systems
 * `docker-compose build scraper`
 * `chown -R 1000:1000 /solar-observatory`
 * `docker-compose up -d`
-* http://localhost:3000  Username: `admin` Password: `foobar` import `solar-observatory/dashboard.json`
+* http://localhost:3000  Username: `admin` Password: `foobar` Import `/solar-observatory/dashboard.json`
 
 
 
