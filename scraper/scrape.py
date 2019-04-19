@@ -16,35 +16,38 @@ user = 'installer'
 auth = HTTPDigestAuth(user, password)
 marker = b'data: '
 
-
+#For adding a lable to what array string or phase they are on 
 serials = {
-    121850001173: 'rear',
-    121849122280: 'rear',
-    121850012348: 'rear',
-    121850001997: 'rear',
-    121850002880: 'rear',
-    121850011577: 'rear',
-    121850002061: 'rear',
-    121849108018: 'rear',
-
-    121850002885: 'middle',
-    121850010982: 'middle',
-    121850004755: 'middle',
-    121850006401: 'middle',
-    121850011134: 'middle',
-    121850007048: 'middle',
-    121850012763: 'middle',
-    121849122422: 'middle',
-
-    121850001861: 'front',
-    121849112294: 'front',
-    121850012825: 'front',
-    121850005175: 'front',
-    121850002882: 'front',
-    121850001010: 'front',
-    121850011206: 'front',
-    121850000865: 'front',
+    121718037663: '#1',
+    121718037534: '#1',
+    121718037513: '#1',
+    121718037414: '#1',
+    121718037683: '#1',
+    121718037593: '',  
+    121718037695: '#1',
+    121718037872: '#1',
+    121718037601: '#1',
+    121718037876: '#2',
+    121718037698: '#2',
+    121718037881: '#2',
+    121718037584: '#2',
+    121718037703: '#2',
+    
 }
+
+#For blacklisting innverters ( especailly if you are unable to delete a dead one )
+ignorelist = {
+    '121718037628',
+    '121718037807',
+    '121718037872',
+    '121718037876',
+    '121718032328',
+    '121718037435',
+    '121718037535',
+    '121718037584',
+    '121718037587',
+    '',
+} 
 
 
 stream_gauges = {
@@ -94,7 +97,7 @@ def scrape_stream():
                                     stream_gauges[key].labels(type=meter_type, phase=phase).set(value)
         except requests.exceptions.RequestException as e:
             print('Exception fetching stream data: %s' % e)
-            time.sleep(5)
+            time.sleep(15)
 
 
 def scrape_production_json():
@@ -118,16 +121,18 @@ def scrape_production_json():
                 consumption_gauges[key].labels(type=mtype).set(value)
 
 
-
 def scrape_inverters():
     url = 'http://%s/api/v1/production/inverters' % host
     data = requests.get(url, auth=auth).json()
     print(data)
+
     for inverter in data:
-        serial = int(inverter['serialNumber'])
-        location = serials.get(serial, '')
-        inverter_gauges['last'].labels(serial=serial, location=location).set(inverter['lastReportWatts'])
-        inverter_gauges['max'].labels(serial=serial, location=location).set(inverter['maxReportWatts'])
+        if inverter['serialNumber'] not in ignorelist:
+            print(inverter)
+            serial = int(inverter['serialNumber'])
+            location = serials.get(serial, '')
+            inverter_gauges['last'].labels(serial=serial, location=location).set(inverter['lastReportWatts'])
+            inverter_gauges['max'].labels(serial=serial, location=location).set(inverter['maxReportWatts'])
 
 
 def main():
