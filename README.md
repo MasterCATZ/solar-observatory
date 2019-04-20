@@ -23,3 +23,4 @@ If you wish to label your panels
 just replace the `serials` map in scrape.py and rebuild the container.
 
 ![dashboard](https://github.com/petercable/solar-observatory/blob/master/screenshot.png)
+![dashboard](https://github.com/MasterCATZ/solar-observatory/blob/master/Screenshot%20from%202019-04-20%2015-14-27.png)
