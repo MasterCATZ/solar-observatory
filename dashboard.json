@@ -63,13 +63,24 @@
       "pluginVersion": "6.1.4",
       "targets": [
         {
-          "expr": "sum(meter_frequency_hertz{type=\"production\"})",
+          "expr": "(meter_frequency_hertz{phase=\"ph-a\",type=\"production\"})",
           "format": "time_series",
           "hide": false,
-          "instant": true,
+          "instant": false,
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": " {{phase}}",
           "refId": "A"
+        },
+        {
+          "expr": "(meter_frequency_hertz{phase=\"ph-a\",phase=\"ph-b\",type=\"production\"})",
+          "format": "time_series",
+          "hide": true,
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": " {{phase}}",
+          "refId": "B"
         }
       ],
       "timeFrom": null,
@@ -80,59 +91,90 @@
     },
     {
       "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": true,
+      "colors": [
+        "#d44a3a",
+        "#FADE2A",
+        "#73BF69"
+      ],
+      "decimals": null,
+      "format": "watt",
+      "gauge": {
+        "maxValue": 6000,
+        "minValue": 0,
+        "show": true,
+        "thresholdLabels": true,
+        "thresholdMarkers": true
+      },
       "gridPos": {
-        "h": 3,
-        "w": 3,
+        "h": 6,
+        "w": 10,
         "x": 3,
         "y": 0
       },
-      "id": 6,
+      "id": 49,
+      "interval": "1s",
       "links": [],
-      "options": {
-        "maxValue": "250",
-        "minValue": "220",
-        "orientation": "auto",
-        "showThresholdLabels": true,
-        "showThresholdMarkers": true,
-        "thresholds": [
-          {
-            "color": "yellow",
-            "index": 0,
-            "value": null
-          },
-          {
-            "color": "green",
-            "index": 1,
-            "value": 230
-          },
-          {
-            "color": "red",
-            "index": 2,
-            "value": 251
-          }
-        ],
-        "valueMappings": [],
-        "valueOptions": {
-          "decimals": null,
-          "prefix": "",
-          "stat": "mean",
-          "suffix": "",
-          "unit": "none"
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
         }
-      },
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
       "pluginVersion": "6.1.4",
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(184, 119, 217, 0.17)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": true
+      },
+      "tableColumn": "type",
       "targets": [
         {
-          "expr": "sum(meter_voltage_volts{type=\"production\"})",
+          "expr": "(power_now_watts{type=\"inverters\"})",
           "format": "time_series",
           "instant": true,
+          "interval": "5s",
           "intervalFactor": 1,
+          "legendFormat": "",
           "refId": "A"
         }
       ],
-      "title": "Voltage",
+      "thresholds": "1000,2000,3000",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "power now watts",
       "transparent": true,
-      "type": "gauge"
+      "type": "singlestat",
+      "valueFontSize": "70%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "current"
     },
     {
       "cacheTimeout": null,
@@ -153,9 +195,9 @@
         "thresholdMarkers": true
       },
       "gridPos": {
-        "h": 3,
+        "h": 6,
         "w": 4,
-        "x": 9,
+        "x": 13,
         "y": 0
       },
       "id": 32,
@@ -195,99 +237,35 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(meter_active_power_watts{type=\"production\"})",
+          "expr": "(meter_active_power_watts{type=\"production\"})",
           "format": "time_series",
+          "hide": true,
           "instant": false,
           "intervalFactor": 1,
           "legendFormat": "",
           "refId": "A"
+        },
+        {
+          "expr": "(meter_active_power_watts{phase=\"ph-a\",type=\"production\"})",
+          "format": "time_series",
+          "hide": false,
+          "instant": false,
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "B"
+        },
+        {
+          "expr": "(meter_active_power_watts{phase=\"ph-b\",type=\"production\"})",
+          "format": "time_series",
+          "hide": true,
+          "instant": false,
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "C"
         }
       ],
       "thresholds": "1000,6000",
       "title": "Production",
-      "transparent": true,
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "#299c46",
-        "rgba(237, 129, 40, 0.89)",
-        "#d44a3a"
-      ],
-      "format": "watt",
-      "gauge": {
-        "maxValue": 8000,
-        "minValue": 0,
-        "show": true,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 13,
-        "y": 0
-      },
-      "id": 29,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": true
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "expr": "sum(meter_active_power_watts{type=\"total-consumption\"})",
-          "format": "time_series",
-          "instant": false,
-          "interval": "30s",
-          "intervalFactor": 1,
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "thresholds": "1000,4000",
-      "title": "Consumption",
       "transparent": true,
       "type": "singlestat",
       "valueFontSize": "80%",
@@ -391,7 +369,6 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": "Prometheus",
       "format": "watth",
       "gauge": {
         "maxValue": 100,
@@ -443,7 +420,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "production_today_watthours",
+          "expr": "production_today_watthours{type=\"eim\"}",
           "format": "time_series",
           "instant": true,
           "intervalFactor": 1,
@@ -462,193 +439,178 @@
           "value": "null"
         }
       ],
-      "valueName": "avg"
+      "valueName": "current"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "fill": 0,
+      "cacheTimeout": null,
       "gridPos": {
-        "h": 7,
-        "w": 12,
+        "h": 3,
+        "w": 3,
         "x": 0,
         "y": 3
       },
-      "id": 2,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
+      "id": 6,
       "links": [],
-      "nullPointMode": "null",
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      "options": {
+        "maxValue": "250",
+        "minValue": "220",
+        "orientation": "auto",
+        "showThresholdLabels": true,
+        "showThresholdMarkers": true,
+        "thresholds": [
+          {
+            "color": "yellow",
+            "index": 0,
+            "value": null
+          },
+          {
+            "color": "green",
+            "index": 1,
+            "value": 230
+          },
+          {
+            "color": "red",
+            "index": 2,
+            "value": 251
+          }
+        ],
+        "valueMappings": [],
+        "valueOptions": {
+          "decimals": null,
+          "prefix": "",
+          "stat": "last",
+          "suffix": "",
+          "unit": "volt"
+        }
+      },
+      "pluginVersion": "6.1.4",
       "targets": [
         {
-          "expr": "sum by(phase) (meter_active_power_watts{type=\"production\"})",
+          "expr": "(meter_voltage_volts{phase=\"ph-a\",type=\"production\"})",
           "format": "time_series",
-          "hide": false,
+          "instant": true,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": " {{phase}}",
+          "refId": "A"
+        },
+        {
+          "expr": "(meter_voltage_volts{phase=\"ph-b\",type=\"production\"})",
+          "format": "time_series",
+          "hide": true,
           "instant": false,
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "Active power {{phase}}",
-          "refId": "A"
-        },
-        {
-          "expr": "sum by(phase, type) (meter_apparent_power_watts{type=\"production\"})",
-          "format": "time_series",
-          "instant": false,
-          "intervalFactor": 1,
-          "legendFormat": "Apparent power {{phase}}",
+          "legendFormat": " {{phase}}",
           "refId": "B"
         },
         {
-          "expr": "sum by(phase, type) (meter_reactive_power_watts{type=\"production\"})",
+          "expr": "(meter_voltage_volts{phase=\"ph-a\",type=\"net-consumption\"})",
           "format": "time_series",
+          "hide": true,
           "instant": false,
+          "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "Reactive power {{phase}}",
+          "legendFormat": " {{phase}}",
           "refId": "C"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Production meter power",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": true
         },
         {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
+          "expr": "(meter_voltage_volts{phase=\"ph-b\",type=\"net-consumption\"})",
+          "format": "time_series",
+          "hide": true,
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": " {{phase}}",
+          "refId": "D"
         }
       ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "title": "Voltage",
+      "transparent": true,
+      "type": "gauge"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "fill": 1,
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "format": "watt",
+      "gauge": {
+        "maxValue": 8000,
+        "minValue": 0,
+        "show": true,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
       "gridPos": {
-        "h": 7,
-        "w": 9,
-        "x": 12,
+        "h": 3,
+        "w": 4,
+        "x": 17,
         "y": 3
       },
-      "id": 34,
-      "legend": {
-        "avg": true,
-        "current": true,
-        "max": true,
-        "min": true,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
+      "id": 29,
+      "interval": null,
       "links": [],
-      "nullPointMode": "null",
-      "percentage": false,
-      "pointradius": 1,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": true
+      },
+      "tableColumn": "",
       "targets": [
         {
-          "expr": "sum by(phase)(meter_current_amps{type=\"production\"})",
+          "expr": "sum(meter_active_power_watts{type=\"total-consumption\"})",
           "format": "time_series",
+          "instant": false,
+          "interval": "30s",
           "intervalFactor": 1,
+          "legendFormat": "",
           "refId": "A"
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Current",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
+      "thresholds": "1000,4000",
+      "title": "Total Consumption",
+      "transparent": true,
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
         {
-          "format": "amp",
-          "label": "",
-          "logBase": 1,
-          "max": "25",
-          "min": "0",
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
         }
       ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "valueName": "current"
     },
     {
       "cacheTimeout": null,
@@ -710,7 +672,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "production_7days_watthours",
+          "expr": "production_7days_watthours{type=\"eim\"}",
           "format": "time_series",
           "instant": true,
           "intervalFactor": 1,
@@ -729,7 +691,7 @@
           "value": "null"
         }
       ],
-      "valueName": "avg"
+      "valueName": "current"
     },
     {
       "cacheTimeout": null,
@@ -812,6 +774,97 @@
       "valueName": "current"
     },
     {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "fill": 1,
+      "gridPos": {
+        "h": 9,
+        "w": 21,
+        "x": 0,
+        "y": 6
+      },
+      "hideTimeOverride": false,
+      "id": 18,
+      "interval": "15s",
+      "legend": {
+        "alignAsTable": false,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pluginVersion": "6.1.4",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "(power_now_watts{type=\"inverters\"})",
+          "format": "time_series",
+          "instant": false,
+          "interval": "10s",
+          "intervalFactor": 1,
+          "legendFormat": "power_now_watts{ {{inverters}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Power",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "watt",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
       "cacheTimeout": null,
       "colorBackground": false,
       "colorValue": false,
@@ -890,7 +943,7 @@
           "value": "null"
         }
       ],
-      "valueName": "avg"
+      "valueName": "current"
     },
     {
       "cacheTimeout": null,
@@ -971,91 +1024,6 @@
         }
       ],
       "valueName": "current"
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "fill": 1,
-      "gridPos": {
-        "h": 10,
-        "w": 21,
-        "x": 0,
-        "y": 10
-      },
-      "id": 36,
-      "legend": {
-        "alignAsTable": false,
-        "avg": true,
-        "current": true,
-        "max": true,
-        "min": true,
-        "rightSide": false,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "percentage": true,
-      "pointradius": 3,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "sum (meter_active_power_watts{type=\"production\"})",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Total production",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "watt",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
     },
     {
       "cacheTimeout": null,
@@ -1217,7 +1185,193 @@
           "value": "null"
         }
       ],
-      "valueName": "avg"
+      "valueName": "current"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "fill": 0,
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 15
+      },
+      "id": 2,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum by(phase) (meter_active_power_watts{type=\"production\"})",
+          "format": "time_series",
+          "hide": false,
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "Active power {{phase}}",
+          "refId": "A"
+        },
+        {
+          "expr": "sum by(phase, type) (meter_apparent_power_watts{type=\"production\"})",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "legendFormat": "Apparent power {{phase}}",
+          "refId": "B"
+        },
+        {
+          "expr": "sum by(phase, type) (meter_reactive_power_watts{type=\"production\"})",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "legendFormat": "Reactive power {{phase}}",
+          "refId": "C"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Production meter power",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "fill": 1,
+      "gridPos": {
+        "h": 7,
+        "w": 9,
+        "x": 12,
+        "y": 15
+      },
+      "id": 34,
+      "legend": {
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 1,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum by(phase)(meter_current_amps{type=\"production\"})",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Current",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "amp",
+          "label": "",
+          "logBase": 1,
+          "max": "25",
+          "min": "0",
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
     },
     {
       "cacheTimeout": null,
@@ -1228,7 +1382,6 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": "Prometheus",
       "format": "watth",
       "gauge": {
         "maxValue": 100,
@@ -1282,7 +1435,7 @@
         {
           "expr": "production_lifetime_watthours{type=\"eim\"}",
           "format": "time_series",
-          "instant": true,
+          "instant": false,
           "intervalFactor": 1,
           "refId": "A"
         }
@@ -1299,7 +1452,7 @@
           "value": "null"
         }
       ],
-      "valueName": "avg"
+      "valueName": "current"
     },
     {
       "aliasColors": {},
@@ -1309,12 +1462,13 @@
       "dashes": false,
       "fill": 0,
       "gridPos": {
-        "h": 9,
+        "h": 18,
         "w": 24,
         "x": 0,
-        "y": 20
+        "y": 22
       },
       "id": 22,
+      "interval": "15s",
       "legend": {
         "alignAsTable": false,
         "avg": false,
@@ -1337,76 +1491,7 @@
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
-      "seriesOverrides": [
-        {
-          "alias": "121718032328",
-          "dashes": false,
-          "fill": 0,
-          "hideTooltip": true,
-          "legend": false,
-          "lines": false,
-          "linewidth": 0,
-          "stack": false
-        },
-        {
-          "alias": "121718037435",
-          "fill": 0,
-          "hideTooltip": true,
-          "legend": false,
-          "lines": false,
-          "linewidth": 0,
-          "stack": false
-        },
-        {
-          "alias": "121718037535",
-          "hideTooltip": true,
-          "legend": false,
-          "lines": false,
-          "stack": false
-        },
-        {
-          "alias": "121718037584",
-          "hideTooltip": true,
-          "legend": false,
-          "lines": false,
-          "stack": false
-        },
-        {
-          "alias": "121718037587",
-          "hideTooltip": true,
-          "legend": false,
-          "lines": false,
-          "stack": false
-        },
-        {
-          "alias": "121718037628",
-          "hideTooltip": true,
-          "legend": false,
-          "lines": false,
-          "stack": false
-        },
-        {
-          "alias": "121718037807",
-          "hideTooltip": true,
-          "legend": false,
-          "lines": false,
-          "stack": false
-        },
-        {
-          "alias": "121718037872",
-          "hideTooltip": true,
-          "legend": false,
-          "lines": false,
-          "stack": false
-        },
-        {
-          "alias": "121718037876",
-          "hideTooltip": true,
-          "legend": false,
-          "lines": false,
-          "stack": false
-        }
-      ],
+      "seriesOverrides": [],
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
@@ -1415,7 +1500,7 @@
           "expr": "sum by(location,serial) (inverter_last_report_watts)",
           "format": "time_series",
           "instant": false,
-          "interval": "",
+          "interval": "15s",
           "intervalFactor": 1,
           "legendFormat": "{{location}} {{serial}}",
           "refId": "A"
@@ -1423,6 +1508,7 @@
         {
           "expr": "max (inverter_max_report_watts)",
           "format": "time_series",
+          "hide": true,
           "instant": false,
           "intervalFactor": 1,
           "refId": "B"
@@ -1451,8 +1537,8 @@
           "format": "watt",
           "label": "",
           "logBase": 1,
-          "max": "275",
-          "min": "0",
+          "max": null,
+          "min": null,
           "show": true
         },
         {
@@ -1479,7 +1565,7 @@
         "h": 9,
         "w": 24,
         "x": 0,
-        "y": 29
+        "y": 40
       },
       "id": 47,
       "legend": {
@@ -1516,6 +1602,7 @@
         {
           "expr": "max (inverter_max_report_watts)",
           "format": "time_series",
+          "hide": true,
           "intervalFactor": 1,
           "refId": "B"
         }
@@ -1571,7 +1658,7 @@
         "h": 9,
         "w": 24,
         "x": 0,
-        "y": 38
+        "y": 49
       },
       "id": 46,
       "legend": {
@@ -1654,178 +1741,10 @@
       "dashes": false,
       "fill": 0,
       "gridPos": {
-        "h": 6,
+        "h": 18,
         "w": 13,
         "x": 0,
-        "y": 47
-      },
-      "id": 18,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "sum by(type) (power_now_watts)",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Power",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "watt",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "fill": 0,
-      "gridPos": {
-        "h": 6,
-        "w": 11,
-        "x": 13,
-        "y": 47
-      },
-      "id": 20,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "sum by(phase) (meter_power_factor_ratio{type=\"production\"})",
-          "format": "time_series",
-          "instant": false,
-          "intervalFactor": 1,
-          "legendFormat": "Power Factor {{phase}}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Power Factor",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": "1.1",
-          "min": "-0.1",
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "fill": 0,
-      "gridPos": {
-        "h": 12,
-        "w": 13,
-        "x": 0,
-        "y": 53
+        "y": 58
       },
       "id": 24,
       "legend": {
@@ -1912,12 +1831,97 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "fill": 0,
+      "gridPos": {
+        "h": 6,
+        "w": 11,
+        "x": 13,
+        "y": 58
+      },
+      "id": 20,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum by(phase) (meter_power_factor_ratio{type=\"production\"})",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "legendFormat": "Power Factor {{phase}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Power Factor",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": "1.1",
+          "min": "-0.1",
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
       "fill": 1,
       "gridPos": {
         "h": 6,
         "w": 11,
         "x": 13,
-        "y": 53
+        "y": 64
       },
       "id": 26,
       "legend": {
@@ -2001,7 +2005,7 @@
         "h": 6,
         "w": 11,
         "x": 13,
-        "y": 59
+        "y": 70
       },
       "id": 27,
       "legend": {
@@ -2085,7 +2089,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 65
+        "y": 76
       },
       "id": 45,
       "legend": {
@@ -2163,9 +2167,94 @@
         "align": false,
         "alignLevel": null
       }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "fill": 1,
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 84
+      },
+      "id": 36,
+      "legend": {
+        "alignAsTable": false,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": true,
+      "pointradius": 3,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "(meter_active_power_watts{type=\"production\"})",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "meter_active_power_watts \"production\"",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "watt",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
     }
   ],
-  "refresh": "1m",
+  "refresh": "10s",
   "schemaVersion": 18,
   "style": "dark",
   "tags": [],
@@ -2173,7 +2262,7 @@
     "list": []
   },
   "time": {
-    "from": "now-30m",
+    "from": "now/d",
     "to": "now"
   },
   "timepicker": {
@@ -2205,5 +2294,5 @@
   "timezone": "browser",
   "title": "Solar",
   "uid": "z8Q6HoXmz",
-  "version": 9
+  "version": 19
 }
