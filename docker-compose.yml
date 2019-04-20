@@ -71,5 +71,5 @@ services:
       - back-tier
     restart: always
     environment:
-      ENVOY_HOST: 192.168.86.54
+      ENVOY_HOST: envoy
       ENVOY_PASS: PASSWORD
