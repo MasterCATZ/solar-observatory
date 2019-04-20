@@ -18,7 +18,7 @@ Monitoring system for Enphase envoy-based photovoltaic systems
 
 
 
-I have 3 arrays of panels, so their are some location labeling for these arrays to help measure loads of each phase.
+As we have multiple arrays of panels, so their are some location labeling for these arrays to help measure loads of each phase.
 If you wish to label your panels,
 Just replace the inverters `serials` map in scrape.py 
 then rebuild the container. `docker-compose build scraper`, `docker-compose up -d`
