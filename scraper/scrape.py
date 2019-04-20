@@ -44,6 +44,7 @@ ignorelist = {
     '121718037587',
     '121718037866',
     '121718036703',
+    '121718037593',
 } 
 
 
@@ -94,7 +95,7 @@ def scrape_stream():
                                     stream_gauges[key].labels(type=meter_type, phase=phase).set(value)
         except requests.exceptions.RequestException as e:
             print('Exception fetching stream data: %s' % e)
-            time.sleep(15)
+#            time.sleep(10)
 
 
 def scrape_production_json():
@@ -116,7 +117,7 @@ def scrape_production_json():
             value = each.get(key)
             if value is not None:
                 consumption_gauges[key].labels(type=mtype).set(value)
-
+ #           time.sleep(10)
 
 def scrape_inverters():
     url = 'http://%s/api/v1/production/inverters' % host
@@ -130,7 +131,7 @@ def scrape_inverters():
             location = serials.get(serial, '')
             inverter_gauges['last'].labels(serial=serial, location=location).set(inverter['lastReportWatts'])
             inverter_gauges['max'].labels(serial=serial, location=location).set(inverter['maxReportWatts'])
-
+#        time.sleep(10)
 
 def main():
     start_http_server(8000)
