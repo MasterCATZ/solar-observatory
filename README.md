@@ -18,9 +18,11 @@ Monitoring system for Enphase envoy-based photovoltaic systems
 
 
 
-I have 3 arrays of panels, so I have some location labeling for these 3 arrays to measure AMPS of each phase.
-If you wish to label your panels
-just replace the `serials` map in scrape.py and rebuild the container.
+I have 3 arrays of panels, so their are some location labeling for these arrays to help measure loads of each phase.
+If you wish to label your panels,
+Just replace the inverters `serials` map in scrape.py 
+then rebuild the container. `docker-compose build scraper`, `docker-compose up -d`
+(their is also an `ignorelist`  if you are unable to delete dead inverters from your envoy)
 
 ![dashboard](https://github.com/petercable/solar-observatory/blob/master/screenshot.png)
 ![dashboard](https://github.com/MasterCATZ/solar-observatory/blob/master/Screenshot%20from%202019-04-20%2015-14-27.png)
